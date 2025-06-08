@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-In - CheckInApp</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1>CheckInApp</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="class-setup.html">Setup Class</a></li>
+                    <li><a href="check-in.html" class="active">Check-In</a></li>
+                    <li><a href="attendee-list.html">Attendee List</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Class Information Display -->
+            <div id="classInfoContainer" class="class-info" style="display: none;">
+                <h3>Current Class Information</h3>
+                <div class="class-details" id="classDetails">
+                    <!-- Class details will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- No Active Class Message -->
+            <div id="noClassMessage" class="alert alert-info" style="display: none;">
+                <strong>No Active Class Found</strong>
+                <p>Please <a href="class-setup.html">setup a class</a> first before checking in attendees.</p>
+            </div>
+
+            <!-- Check-In Form -->
+            <div id="checkInFormContainer" class="form-container" style="display: none;">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Attendee Check-In</h2>
+                
+                <form id="checkInForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" name="company" placeholder="Enter your company name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="futureInterest" name="futureInterest">
+                            <label for="futureInterest">I'm interested in future classes</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Check In</button>
+                </form>
+                
+                <div id="alertContainer"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CheckInApp. Simple class attendance management.</p>
+        </div>
+    </footer>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/check-in.js"></script>
+</body>
+</html>

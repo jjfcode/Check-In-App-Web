@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendee List - CheckInApp</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1>CheckInApp</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="class-setup.html">Setup Class</a></li>
+                    <li><a href="check-in.html">Check-In</a></li>
+                    <li><a href="attendee-list.html" class="active">Attendee List</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Class Information Display -->
+            <div id="classInfoContainer" class="class-info" style="display: none;">
+                <h3>Class Information</h3>
+                <div class="class-details" id="classDetails">
+                    <!-- Class details will be populated by JavaScript -->
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button id="exportCsvBtn" class="btn btn-success">Export to CSV</button>
+                    <button id="adminBtn" class="btn btn-secondary">Admin Panel</button>
+                </div>
+            </div>
+
+            <!-- No Active Class Message -->
+            <div id="noClassMessage" class="alert alert-info" style="display: none;">
+                <strong>No Active Class Found</strong>
+                <p>Please <a href="class-setup.html">setup a class</a> first to view attendees.</p>
+            </div>
+
+            <!-- Attendee List -->
+            <div id="attendeeListContainer" style="display: none;">
+                <h3 style="margin-bottom: 1rem;">Registered Attendees (<span id="attendeeCount">0</span>)</h3>
+                <div class="table-container">
+                    <table id="attendeeTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Future Interest</th>
+                                <th>Check-In Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendeeTableBody">
+                            <!-- Attendee data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- No Attendees Message -->
+            <div id="noAttendeesMessage" class="alert alert-info" style="display: none;">
+                <strong>No Attendees Registered Yet</strong>
+                <p>Attendees can register using the <a href="check-in.html">Check-In page</a>.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Admin Authentication</h3>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password:</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Access Admin Panel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminPanelModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Admin Panel</h3>
+            <div id="adminPanelContent">
+                <div style="margin-bottom: 2rem;">
+                    <h4>Class History</h4>
+                    <div id="classHistoryContainer">
+                        <!-- Class history will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button id="clearCurrentClassBtn" class="btn btn-secondary">Clear Current Class</button>
+                    <button id="clearAllDataBtn" class="btn" style="background: #dc3545; color: white;">Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CheckInApp. Simple class attendance management.</p>
+        </div>
+    </footer>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/attendee-list.js"></script>
+</body>
+</html>

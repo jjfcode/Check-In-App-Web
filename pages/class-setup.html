@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Class - CheckInApp</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1>CheckInApp</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="class-setup.html" class="active">Setup Class</a></li>
+                    <li><a href="check-in.html">Check-In</a></li>
+                    <li><a href="attendee-list.html">Attendee List</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Setup New Class</h2>
+            
+            <div class="form-container">
+                <form id="classSetupForm">
+                    <div class="form-group">
+                        <label for="className">Class Name *</label>
+                        <input type="text" id="className" name="className" required placeholder="Enter class name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="classDate">Class Date *</label>
+                        <input type="date" id="classDate" name="classDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="startTime">Start Time *</label>
+                        <input type="time" id="startTime" name="startTime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="endTime">End Time *</label>
+                        <input type="time" id="endTime" name="endTime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description (Optional)</label>
+                        <textarea id="description" name="description" rows="3" placeholder="Enter class description or notes"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Class</button>
+                </form>
+                
+                <div id="alertContainer"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CheckInApp. Simple class attendance management.</p>
+        </div>
+    </footer>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/class-setup.js"></script>
+</body>
+</html>
