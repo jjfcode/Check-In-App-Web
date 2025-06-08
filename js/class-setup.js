@@ -137,20 +137,40 @@ function validateClassData(classData) {
     if (!classData.endTime) {
         Utils.showAlert(alertContainer, '<strong>Error!</strong> End time is required.', 'error');
         return false;
-    }
-
-    // Validate date is not in the past
-    const classDate = new Date(classData.date);
+    }    // Validate date and time are not in the past
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (classDate < today) {
+    const todayDateString = today.getFullYear() + '-' + 
+                           String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                           String(today.getDate()).padStart(2, '0');
+    
+    // Compare date strings to avoid timezone issues
+    if (classData.date < todayDateString) {
         Utils.showAlert(
             alertContainer,
             '<strong>Error!</strong> Class date cannot be in the past.',
             'error'
         );
         return false;
+    }
+
+    // If it's today, check that the start time is not in the past
+    if (classData.date === todayDateString) {
+        const [startHours, startMinutes] = classData.startTime.split(':');
+        const classStartDateTime = new Date();
+        classStartDateTime.setHours(parseInt(startHours), parseInt(startMinutes), 0, 0);
+        
+        // Allow classes to be created if they start within the next 15 minutes or later
+        const now = new Date();
+        const minAllowedTime = new Date(now.getTime() - 15 * 60 * 1000); // 15 minutes ago
+        
+        if (classStartDateTime < minAllowedTime) {
+            Utils.showAlert(
+                alertContainer,
+                '<strong>Error!</strong> Class start time cannot be more than 15 minutes in the past.',
+                'error'
+            );
+            return false;
+        }
     }
 
     // Validate time sequence
