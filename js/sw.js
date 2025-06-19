@@ -1,46 +1,85 @@
 // Service Worker for CheckInApp PWA
-const CACHE_NAME = 'checkinapp-v1.0.2';
+const CACHE_NAME = 'checkinapp-v1.0.4';
+
+// Determine the correct base path based on the service worker location
+const swUrl = new URL(self.location.href);
+const basePath = swUrl.pathname.replace('/js/sw.js', '/');
+const origin = swUrl.origin;
+const baseURL = origin + basePath;
+
+console.log('Service Worker: Base URL determined as:', baseURL);
+console.log('Service Worker: Origin:', origin);
+console.log('Service Worker: Base path:', basePath);
+
 const urlsToCache = [
-  './',
-  './index.html',
-  './pages/class-setup.html',
-  './pages/check-in.html',
-  './pages/attendee-list.html',
-  './offline.html',
-  './css/styles.css',
-  './js/main.js',
-  './js/storage.js',
-  './js/utils.js',
-  './js/class-setup.js',
-  './js/check-in.js',
-  './js/attendee-list.js',
-  './assets/icon-192x192.png',
-  './assets/icon-512x512.png',
-  './manifest.json'
+  baseURL,
+  baseURL + 'index.html',
+  baseURL + 'pages/class-setup.html',
+  baseURL + 'pages/check-in.html',
+  baseURL + 'pages/attendee-list.html',
+  baseURL + 'offline.html',
+  baseURL + 'css/styles.css',
+  baseURL + 'js/main.js',
+  baseURL + 'js/storage.js',
+  baseURL + 'js/utils.js',
+  baseURL + 'js/class-setup.js',
+  baseURL + 'js/check-in.js',
+  baseURL + 'js/attendee-list.js',
+  baseURL + 'assets/icon-192x192.png',
+  baseURL + 'assets/icon-512x512.png',
+  baseURL + 'manifest.json'
 ];
 
 // Install event - cache resources
 self.addEventListener('install', event => {
   console.log('Service Worker: Installing...');
+  console.log('Service Worker: URLs to cache:', urlsToCache);
+  
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Service Worker: Caching files');
-        // Cache local files first
-        return cache.addAll(urlsToCache);
+        
+        // Test each URL first, then cache only the valid ones
+        const cachePromises = urlsToCache.map(url => {
+          console.log(`Service Worker: Attempting to cache: ${url}`);
+          return fetch(url)
+            .then(response => {
+              if (response.ok) {
+                return cache.add(url);
+              } else {
+                console.warn(`Service Worker: Skipping ${url} - HTTP ${response.status}`);
+                return Promise.resolve();
+              }
+            })
+            .catch(error => {
+              console.error(`Service Worker: Failed to cache ${url}:`, error);
+              return Promise.resolve(); // Don't fail the entire installation
+            });
+        });
+        
+        return Promise.all(cachePromises);
       })
       .then(() => {
         // Try to cache external resources separately
         return caches.open(CACHE_NAME).then(cache => {
-          return cache.add('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap')
+          const fontsUrl = 'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap';
+          console.log('Service Worker: Attempting to cache Google Fonts');
+          return fetch(fontsUrl)
+            .then(response => {
+              if (response.ok) {
+                return cache.add(fontsUrl);
+              } else {
+                console.warn('Service Worker: Failed to fetch Google Fonts');
+              }
+            })
             .catch(error => {
               console.warn('Service Worker: Failed to cache Google Fonts:', error);
-              // Don't fail the entire installation if fonts fail
             });
         });
       })
       .then(() => {
-        console.log('Service Worker: Installed successfully');
+        console.log('Service Worker: Installation completed successfully');
         return self.skipWaiting();
       })
       .catch(error => {
