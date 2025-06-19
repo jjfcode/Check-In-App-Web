@@ -1,4 +1,28 @@
 // Main JavaScript for index.html
+
+// Global error handler for Chrome extension errors
+window.addEventListener('error', function(event) {
+    // Suppress Chrome extension errors that don't affect our app
+    if (event.error && event.error.message && 
+        (event.error.message.includes('message port closed') || 
+         event.error.message.includes('Extension context invalidated'))) {
+        console.warn('Chrome extension error suppressed:', event.error.message);
+        event.preventDefault();
+        return false;
+    }
+});
+
+// Handle unhandled promise rejections from extensions
+window.addEventListener('unhandledrejection', function(event) {
+    if (event.reason && event.reason.message && 
+        (event.reason.message.includes('message port closed') || 
+         event.reason.message.includes('Extension context invalidated'))) {
+        console.warn('Chrome extension promise rejection suppressed:', event.reason.message);
+        event.preventDefault();
+        return false;
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Check if there's an active class and update the UI accordingly
     const currentClass = Storage.getCurrentClass();
