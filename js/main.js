@@ -65,3 +65,64 @@ function updateHomePageWithClassInfo(classInfo) {
         }
     }
 }
+
+// PWA Service Worker Registration
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/js/sw.js')
+                .then(registration => {
+                    console.log('PWA: Service Worker registered successfully', registration);
+                    
+                    // Check for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New content is available, refresh to update
+                                console.log('PWA: New content available, refreshing...');
+                                window.location.reload();
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('PWA: Service Worker registration failed', error);
+                });
+        });
+    } else {
+        console.log('PWA: Service Worker not supported');
+    }
+}
+
+// Install prompt handling
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('PWA: Install prompt triggered');
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+    
+    // Show install button (you can customize this)
+    showInstallPrompt();
+});
+
+function showInstallPrompt() {
+    // Create a subtle install notification (optional)
+    if (deferredPrompt) {
+        console.log('PWA: App can be installed');
+        // You can add UI here to prompt user to install
+        // For now, we'll just log it to keep design unchanged
+    }
+}
+
+// Handle successful app installation
+window.addEventListener('appinstalled', (e) => {
+    console.log('PWA: App successfully installed');
+    deferredPrompt = null;
+});
+
+// Initialize PWA functionality
+registerServiceWorker();

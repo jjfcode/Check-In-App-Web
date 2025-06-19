@@ -1,9 +1,10 @@
 {
-  "name": "CheckInApp",
+  "name": "CheckInApp - Class Attendance Management",
   "short_name": "CheckInApp",
-  "description": "Class attendance management application",
+  "description": "Manage your class attendance with ease. Set up your class, register attendees, and export attendance data.",
   "version": "1.0.0",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2c3e50",
@@ -24,5 +25,44 @@
   ],
   "categories": ["education", "productivity"],
   "lang": "en-US",
-  "dir": "ltr"
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Setup Class",
+      "short_name": "Setup",
+      "description": "Configure your class with name, date, and schedule",
+      "url": "./pages/class-setup.html",
+      "icons": [
+        {
+          "src": "assets/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Check-In",
+      "short_name": "Check-In",
+      "description": "Register attendees for your active class",
+      "url": "./pages/check-in.html",
+      "icons": [
+        {
+          "src": "assets/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Attendee List",
+      "short_name": "Attendees",
+      "description": "View registered attendees and export data",
+      "url": "./pages/attendee-list.html",
+      "icons": [
+        {
+          "src": "assets/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
 }
