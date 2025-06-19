@@ -70,25 +70,58 @@ function updateHomePageWithClassInfo(classInfo) {
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./js/sw.js')
-                .then(registration => {
-                    console.log('PWA: Service Worker registered successfully', registration);
-                    
-                    // Check for updates
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing;
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // New content is available, refresh to update
-                                console.log('PWA: New content available, refreshing...');
-                                window.location.reload();
-                            }
-                        });
-                    });
-                })
-                .catch(error => {
-                    console.error('PWA: Service Worker registration failed', error);
+            // Debug information
+            console.log('Current URL:', window.location.href);
+            console.log('Current pathname:', window.location.pathname);
+            console.log('Current origin:', window.location.origin);
+            
+            // Clear any existing service worker registrations first
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                console.log('Existing registrations:', registrations.length);
+                registrations.forEach(registration => {
+                    console.log('Unregistering old service worker:', registration.scope);
+                    registration.unregister();
                 });
+                
+                // Wait a bit for cleanup, then register new service worker
+                setTimeout(() => {
+                    // Construct the service worker path based on current location
+                    let swPath;
+                    const currentUrl = new URL(window.location.href);
+                    
+                    if (currentUrl.pathname.includes('/Check-In-App-Web/')) {
+                        // GitHub Pages path
+                        swPath = '/Check-In-App-Web/js/sw.js';
+                    } else if (currentUrl.hostname === 'localhost' || currentUrl.hostname === '127.0.0.1') {
+                        // Local development
+                        swPath = '/js/sw.js';
+                    } else {
+                        // Fallback - use relative path
+                        swPath = './js/sw.js';
+                    }
+                    
+                    console.log('Attempting to register service worker from:', swPath);
+                    
+                    navigator.serviceWorker.register(swPath)                        .then(registration => {
+                            console.log('PWA: Service Worker registered successfully', registration);
+                        
+                            // Check for updates
+                            registration.addEventListener('updatefound', () => {
+                                const newWorker = registration.installing;
+                                newWorker.addEventListener('statechange', () => {
+                                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                        // New content is available, refresh to update
+                                        console.log('PWA: New content available, refreshing...');
+                                        window.location.reload();
+                                    }
+                                });
+                            });
+                        })
+                        .catch(error => {
+                            console.error('PWA: Service Worker registration failed', error);
+                        });
+                }, 1000); // Wait 1 second for cleanup
+            });
         });
     } else {
         console.log('PWA: Service Worker not supported');

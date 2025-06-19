@@ -1,5 +1,5 @@
 // Service Worker for CheckInApp PWA
-const CACHE_NAME = 'checkinapp-v1.0.1';
+const CACHE_NAME = 'checkinapp-v1.0.2';
 const urlsToCache = [
   './',
   './index.html',
@@ -16,8 +16,7 @@ const urlsToCache = [
   './js/attendee-list.js',
   './assets/icon-192x192.png',
   './assets/icon-512x512.png',
-  './manifest.json',
-  'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap'
+  './manifest.json'
 ];
 
 // Install event - cache resources
@@ -27,7 +26,18 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Service Worker: Caching files');
+        // Cache local files first
         return cache.addAll(urlsToCache);
+      })
+      .then(() => {
+        // Try to cache external resources separately
+        return caches.open(CACHE_NAME).then(cache => {
+          return cache.add('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap')
+            .catch(error => {
+              console.warn('Service Worker: Failed to cache Google Fonts:', error);
+              // Don't fail the entire installation if fonts fail
+            });
+        });
       })
       .then(() => {
         console.log('Service Worker: Installed successfully');
