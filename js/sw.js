@@ -1,21 +1,22 @@
 // Service Worker for CheckInApp PWA
-const CACHE_NAME = 'checkinapp-v1.0.0';
+const CACHE_NAME = 'checkinapp-v1.0.1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/pages/class-setup.html',
-  '/pages/check-in.html',
-  '/pages/attendee-list.html',
-  '/css/styles.css',
-  '/js/main.js',
-  '/js/storage.js',
-  '/js/utils.js',
-  '/js/class-setup.js',
-  '/js/check-in.js',
-  '/js/attendee-list.js',
-  '/assets/icon-192x192.png',
-  '/assets/icon-512x512.png',
-  '/manifest.json',
+  './',
+  './index.html',
+  './pages/class-setup.html',
+  './pages/check-in.html',
+  './pages/attendee-list.html',
+  './offline.html',
+  './css/styles.css',
+  './js/main.js',
+  './js/storage.js',
+  './js/utils.js',
+  './js/class-setup.js',
+  './js/check-in.js',
+  './js/attendee-list.js',
+  './assets/icon-192x192.png',
+  './assets/icon-512x512.png',
+  './manifest.json',
   'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap'
 ];
 
