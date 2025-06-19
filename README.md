@@ -21,6 +21,13 @@ CheckInApp is a tool for managing class attendance that allows instructors to:
 
 ## 🚀 Features
 
+### Progressive Web App (PWA)
+- **Installable**: Can be installed on any device like a native app
+- **Offline Support**: Works without internet connection after initial load
+- **App Shortcuts**: Quick access to Setup Class, Check-In, and Attendee List
+- **Mobile Optimized**: Native app-like experience on mobile devices
+- **Service Worker**: Caches resources for fast loading and offline functionality
+
 ### Class Management
 - **Class Setup**: Create new classes with name, date, start/end times, and optional description
 - **Smart Validation**: Automatic form validation with date/time checks
@@ -47,6 +54,7 @@ CheckInApp is a tool for managing class attendance that allows instructors to:
 ## 🛠️ Technology Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **PWA**: Progressive Web App with Service Worker and Web App Manifest
 - **Storage**: Browser localStorage
 - **Styling**: Modern CSS with gradients and responsive design
 - **No Dependencies**: Pure vanilla JavaScript, no external libraries
@@ -56,8 +64,13 @@ CheckInApp is a tool for managing class attendance that allows instructors to:
 ```
 Check-In-App-Web/
 ├── index.html              # Main landing page
+├── manifest.json          # PWA manifest file
+├── offline.html           # Offline fallback page
 ├── README.md              # Project documentation
 ├── instructions.md        # Development instructions
+├── assets/
+│   ├── icon-192x192.png   # PWA icon (192x192)
+│   └── icon-512x512.png   # PWA icon (512x512)
 ├── css/
 │   └── styles.css         # Complete application styling
 ├── pages/
@@ -70,7 +83,8 @@ Check-In-App-Web/
     ├── main.js            # Home page logic
     ├── class-setup.js     # Class creation functionality
     ├── check-in.js        # Attendee registration logic
-    └── attendee-list.js   # Attendee display and admin logic
+    ├── attendee-list.js   # Attendee display and admin logic
+    └── sw.js              # Service Worker for PWA functionality
 ```
 
 ## 🚀 Getting Started
@@ -102,6 +116,28 @@ Simply visit [https://jjfcode.github.io/Check-In-App-Web/](https://jjfcode.githu
    ```
 
 4. Open your browser and navigate to `http://localhost:8000`
+
+## 📱 Installing as PWA
+
+CheckInApp can be installed as a Progressive Web App on any device:
+
+### On Desktop (Chrome, Edge, Firefox)
+1. Visit the live demo or local installation
+2. Look for the "Install" button in the address bar or
+3. Click the menu (⋮) → "Install CheckInApp" or "Add to desktop"
+4. Follow the installation prompts
+
+### On Mobile (iOS Safari, Android Chrome)
+1. Open the app in your mobile browser
+2. **iOS**: Tap the Share button → "Add to Home Screen"
+3. **Android**: Tap the menu (⋮) → "Add to Home screen" or "Install app"
+4. The app will appear on your home screen like a native app
+
+### PWA Features
+- **App Shortcuts**: Long-press the app icon to access quick shortcuts
+- **Offline Mode**: Continue using the app even without internet
+- **Full Screen**: Enjoy a distraction-free, native app experience
+- **Fast Loading**: Cached resources load instantly
 
 ## 📖 How to Use
 
@@ -163,6 +199,7 @@ The CSV export includes the following fields:
 
 ## 🌟 Key Benefits
 
+- **Progressive Web App**: Install like a native app with offline functionality
 - **No Server Required**: Runs entirely in the browser
 - **Offline Capable**: Works without internet connection after initial load
 - **Mobile Friendly**: Responsive design works on all devices
@@ -214,11 +251,11 @@ This project is open source and available under the [MIT License](LICENSE).
    - QR code generation for badge verification
    - Print-friendly badge layouts with company logos
 
-3. **📱 Mobile App Enhancements**
-   - Progressive Web App (PWA) support
-   - Offline functionality with service workers
-   - Push notifications for class reminders
+3. **📱 Enhanced Mobile Features**
+   - Advanced PWA capabilities and push notifications
+   - Enhanced offline functionality with background sync
    - Mobile-optimized camera and scanning features
+   - Native device integration (contacts, calendar)
 
 4. **🔔 Notification System**
    - Email notifications for class confirmations
